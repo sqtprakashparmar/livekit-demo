@@ -21,9 +21,9 @@ export default function App() {
   const getRoomToken = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/get_room_token"); // Replace with your actual API endpoint
+      const response = await fetch("https://roomtoken.onrender.com/getToken"); // Replace with your actual API endpoint
       const data = await response.json();
-      setToken(data.token); // Assuming the API returns a JSON with a token field
+      setToken(data?.data?.token); // Assuming the API returns a JSON with a token field
     } catch (error) {
       console.error("Error fetching token:", error);
     } finally {
