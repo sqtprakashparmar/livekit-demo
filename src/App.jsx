@@ -11,25 +11,51 @@ import {
 import "@livekit/components-styles";
 import { Track } from "livekit-client";
 
-const serverUrl = "wss://prakash-test-yqf3xc8h.livekit.cloud";
+const serverUrl = "wss://mia-xjce9ii1.livekit.cloud";
 
 export default function App() {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // Function to fetch the room token
-  const getRoomToken = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("https://roomtoken.onrender.com/getToken"); // Replace with your actual API endpoint
-      const data = await response.json();
-      setToken(data?.data?.token); // Assuming the API returns a JSON with a token field
-    } catch (error) {
-      console.error("Error fetching token:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getRoomToken = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch("https://roomtoken.onrender.com/getToken"); // Replace with your actual API endpoint
+  //     const data = await response.json();
+  //     setToken(data); // Assuming the API returns a JSON with a token field
+  //   } catch (error) {
+  //     console.error("Error fetching token:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // Function to fetch the room token using POST
+const getRoomToken = async () => {
+  setLoading(true);
+  try {
+    const response = await fetch("https://voicebotconfig.softcube.co.in/get_room_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // Add necessary payload here if the API expects it
+        unique_code: "PRRHRA", // example payload
+        // identity: "user123",   // example identity
+      }),
+    });
+
+    const data = await response.json();
+
+    setToken(data.data?.room_token); // Assuming the token is in data.token
+  } catch (error) {
+    console.error("Error fetching token:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div>
